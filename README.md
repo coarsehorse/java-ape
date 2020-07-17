@@ -1,2 +1,13 @@
 # Java API
-Just another one Java API on top of the Spring stack
+Java Restful API on top of the Spring stack.
+
+### Used technologies:
+* Java 11
+* Spring Boot
+  * Spring Data JPA
+  * Spring Security
+  * Spring Web
+* Hibernate
+* MySQL
+* VAVR
+* Lombok
