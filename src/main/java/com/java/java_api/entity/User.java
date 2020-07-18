@@ -18,9 +18,12 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class User extends BaseEntity {
+public class User extends FullDatedEntity {
 
-    private String username;
+    @Column(unique = true, nullable = false)
+    private String nickname;
+    private String fullName;
+    @Column(nullable = false)
     private String password;
     @Type(type = "json")
     @Column(columnDefinition = "json")

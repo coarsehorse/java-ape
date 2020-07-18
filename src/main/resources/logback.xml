@@ -7,7 +7,7 @@
             </Pattern>
         </encoder>
     </appender>
-    <logger name="slm-logger" level="info" additivity="false">
+    <logger name="logger" level="info" additivity="false">
         <appender-ref ref="CONSOLE"/>
     </logger>
     <root level="info">

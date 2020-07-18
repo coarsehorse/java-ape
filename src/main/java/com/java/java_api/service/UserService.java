@@ -8,5 +8,5 @@ import io.vavr.control.Option;
  */
 public interface UserService extends BaseService<User> {
     
-    Option<User> findByName(String username);
+    Option<User> findByNickname(String nickname);
 }

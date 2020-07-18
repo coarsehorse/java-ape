@@ -18,7 +18,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserRepository> imple
     }
     
     @Override
-    public Option<User> findByName(String username) {
-        return getRepository().findByUsername(username);
+    public Option<User> findByNickname(String nickname) {
+        return getRepository().findByNickname(nickname);
     }
 }

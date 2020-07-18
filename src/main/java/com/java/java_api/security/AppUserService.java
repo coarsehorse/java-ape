@@ -22,8 +22,10 @@ public class AppUserService implements UserDetailsService {
     
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userService.findByName(username)
+        return userService.findByNickname(username)
             .map(AppUser::new)
-            .getOrElseThrow(() -> new RuntimeException(String.format("Cannot find user by username %s", username)));
+            .getOrElseThrow(() ->
+                new RuntimeException(String.format("Cannot find user by nickname \"%s\"", username))
+            );
     }
 }

@@ -13,7 +13,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CreateUserRequest {
     
-    private String username;
+    private String nickname;
+    private String fullName;
     private String password;
     private AppRole userRole;
 }

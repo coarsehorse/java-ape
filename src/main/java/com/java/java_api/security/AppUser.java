@@ -16,7 +16,7 @@ public class AppUser implements UserDetails {
     
     private final Set<? extends GrantedAuthority> grantedAuthorities;
     private final String password;
-    private final String username;
+    private final String nickname;
     private final Boolean accountNonExpired;
     private final Boolean accountNonLocked;
     private final Boolean credentialsNonExpired;
@@ -28,7 +28,7 @@ public class AppUser implements UserDetails {
             .map(SimpleGrantedAuthority::new)
             .collect(Collectors.toSet());
         this.password = user.getPassword();
-        this.username = user.getUsername();
+        this.nickname = user.getNickname();
         this.accountNonExpired = true;
         this.accountNonLocked = true;
         this.credentialsNonExpired = true;
@@ -47,7 +47,7 @@ public class AppUser implements UserDetails {
     
     @Override
     public String getUsername() {
-        return this.username;
+        return this.nickname;
     }
     
     @Override

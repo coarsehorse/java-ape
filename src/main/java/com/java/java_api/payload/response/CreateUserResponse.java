@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 /**
@@ -15,13 +16,17 @@ import java.util.Set;
 @AllArgsConstructor
 public class CreateUserResponse {
     
-    private String username;
+    private String nickname;
+    private String fullName;
+    private LocalDateTime creationDate;
     private Set<String> authorities;
     private Boolean enabled;
     
     public static CreateUserResponse from(User user) {
         return new CreateUserResponse(
-            user.getUsername(),
+            user.getNickname(),
+            user.getFullName(),
+            user.getCreationDate(),
             user.getAuthorities(),
             user.getEnabled()
         );

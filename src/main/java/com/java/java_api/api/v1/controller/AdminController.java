@@ -27,7 +27,8 @@ public class AdminController {
     @PostMapping("createUser")
     public CreateUserResponse createUser(@RequestBody CreateUserRequest payload) {
         User newUser = new User(
-            payload.getUsername(),
+            payload.getNickname(),
+            payload.getFullName(),
             passwordEncoder.encode(payload.getPassword()),
             payload.getUserRole().getGrantedAuthorities(),
             true

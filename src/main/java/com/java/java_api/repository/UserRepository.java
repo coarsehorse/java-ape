@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends BaseRepository<User> {
     
-    Option<User> findByUsername(String username);
+    Option<User> findByNickname(String nickname);
 }
