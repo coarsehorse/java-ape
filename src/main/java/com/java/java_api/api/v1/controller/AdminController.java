@@ -5,6 +5,7 @@ import com.java.java_api.payload.request.CreateUserRequest;
 import com.java.java_api.payload.response.CreateUserResponse;
 import com.java.java_api.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,7 @@ public class AdminController {
     }
     
     @PostMapping("createUser")
+    @PreAuthorize("hasAuthority(T(com.java.java_api.security.AppAuthority).ADMIN_WRITE.name())")
     public CreateUserResponse createUser(@RequestBody CreateUserRequest payload) {
         User newUser = new User(
             payload.getNickname(),
@@ -39,6 +41,7 @@ public class AdminController {
     }
     
     @GetMapping("getGreetings")
+    @PreAuthorize("hasAuthority(T(com.java.java_api.security.AppAuthority).ADMIN_READ.name())")
     public String getGreetings() {
         return "Hello, admin!";
     }
