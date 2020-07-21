@@ -4,6 +4,8 @@ import com.java.java_api.entity.BaseEntity;
 import com.java.java_api.repository.BaseRepository;
 import io.vavr.control.Option;
 import lombok.Getter;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 /**
  * Created by coarse_horse on 16/07/2020
@@ -25,5 +27,10 @@ public abstract class BaseServiceImpl<T extends BaseEntity, R extends BaseReposi
     @Override
     public T save(T entity) {
         return repository.save(entity);
+    }
+    
+    @Override
+    public Page<T> findAll(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 }
