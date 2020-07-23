@@ -12,6 +12,8 @@ public interface BaseService<T extends BaseEntity> {
 
     Option<T> findById(Long id);
     
+    T findByIdOrThrow(Long id);
+    
     T save(T entity);
     
     Page<T> findAll(Pageable pageable);

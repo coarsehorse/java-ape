@@ -10,7 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
+import javax.validation.Valid;
 import java.util.stream.Stream;
 
 /**
@@ -29,16 +29,11 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
     
-    // TODO: remove
-    @GetMapping("getGreetings")
-    @PreAuthorize("hasAuthority(T(com.java.java_api.security.AppAuthority).USER_READ.name())")
-    public String getGreetings(Principal principal) {
-        return String.format("Hello, user %s!", principal.getName());
-    }
-    
     @PostMapping("createUser")
     @PreAuthorize("hasAuthority(T(com.java.java_api.security.AppAuthority).ADMIN_WRITE.name())")
-    public CreateUserResponse createUser(@RequestBody CreateUserRequest payload) {
+    public CreateUserResponse createUser(
+        @Valid @RequestBody CreateUserRequest payload
+    ) {
         User newUser = new User(
             payload.getNickname(),
             payload.getFullName(),
@@ -53,7 +48,10 @@ public class UserController {
     
     @GetMapping(path = "getUsers")
     @PreAuthorize("hasAuthority(T(com.java.java_api.security.AppAuthority).ADMIN_READ.name())")
-    public Stream<CreateUserResponse> getUsers(@RequestParam Long offset, @RequestParam Integer size) {
+    public Stream<CreateUserResponse> getUsers(
+        @RequestParam Long offset,
+        @RequestParam Integer size
+    ) {
         return userService.findAll(OffsetBasedPageRequest.of(offset, size))
             .get()
             .map(CreateUserResponse::from);

@@ -23,4 +23,6 @@ public class Post extends FullDatedEntity {
     private String text;
     @ManyToOne
     private User user;
+    @Column(columnDefinition = "boolean default false")
+    private Boolean deleted;
 }

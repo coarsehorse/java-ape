@@ -25,6 +25,15 @@ public abstract class BaseServiceImpl<T extends BaseEntity, R extends BaseReposi
     }
     
     @Override
+    public T findByIdOrThrow(Long id) {
+        return repository.findById(id).orElseThrow(() ->
+            new IllegalArgumentException(
+                String.format("Entity with id=%d is not found", id)
+            )
+        );
+    }
+    
+    @Override
     public T save(T entity) {
         return repository.save(entity);
     }
