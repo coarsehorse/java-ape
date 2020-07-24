@@ -1,5 +1,6 @@
 package com.java.java_api.util;
 
+import com.java.java_api.entity.User;
 import com.java.java_api.security.AppAuthority;
 import com.java.java_api.security.AppUser;
 import io.vavr.collection.HashSet;
@@ -28,5 +29,30 @@ public class Utils {
             .filter(knownAuthorities::contains)
             .map(AppAuthority::valueOf)
             .exists(appAuthority::equals);
+    }
+    
+    /**
+     * Throws an exception if the authenticated user is not an owner.
+     */
+    public static void checkOwnership(Authentication authentication, User owner) {
+        AppUser appUser = Utils.castAuthToAppUser(authentication);
+        Long ownerId = owner.getId();
+        Long appUserId = appUser.getUser().getId();
+        
+        if (!ownerId.equals(appUserId)) {
+            throw new IllegalArgumentException(
+                String.format("Access denied because of user id=%d is not an owner", appUserId)
+            );
+        }
+    }
+    
+    /**
+     * Throws an exception if the authenticated user is not admin or owner.
+     */
+    public static void checkIsAdminOrOwner(Authentication authentication, User owner) {
+        Boolean hasAdminWritePerms = Utils.hasAppAuthority(authentication, AppAuthority.ADMIN_WRITE);
+        if (!hasAdminWritePerms) {
+            Utils.checkOwnership(authentication, owner);
+        }
     }
 }

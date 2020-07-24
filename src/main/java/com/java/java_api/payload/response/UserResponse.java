@@ -14,16 +14,18 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateUserResponse {
+public class UserResponse {
     
+    private Long id;
     private String nickname;
     private String fullName;
     private LocalDateTime creationDate;
     private Set<String> authorities;
     private Boolean enabled;
     
-    public static CreateUserResponse from(User user) {
-        return new CreateUserResponse(
+    public static UserResponse from(User user) {
+        return new UserResponse(
+            user.getId(),
             user.getNickname(),
             user.getFullName(),
             user.getCreationDate(),

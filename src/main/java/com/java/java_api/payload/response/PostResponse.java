@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreatePostResponse {
+public class PostResponse {
     
     private Long id;
     private Long userId;
@@ -21,8 +21,8 @@ public class CreatePostResponse {
     private LocalDateTime creationDate;
     private Boolean deleted;
     
-    public static CreatePostResponse from(Post post) {
-        return new CreatePostResponse(
+    public static PostResponse from(Post post) {
+        return new PostResponse(
             post.getId(),
             post.getUser().getId(),
             post.getText(),

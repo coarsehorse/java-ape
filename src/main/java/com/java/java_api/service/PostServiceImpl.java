@@ -20,6 +20,6 @@ public class PostServiceImpl extends BaseServiceImpl<Post, PostRepository> imple
     
     @Override
     public Stream<Post> findNotDeletedByUserId(Long userId, Pageable pageable) {
-        return Stream.ofAll(getRepository().findByUserIdAndDeletedIsFalse(userId, pageable));
+        return getRepository().findByUserIdAndDeletedIsFalse(userId, pageable).toStream();
     }
 }

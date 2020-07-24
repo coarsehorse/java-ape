@@ -1,7 +1,9 @@
 package com.java.java_api.repository;
 
 import com.java.java_api.entity.User;
+import io.vavr.collection.Seq;
 import io.vavr.control.Option;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -11,4 +13,6 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends BaseRepository<User> {
     
     Option<User> findByNickname(String nickname);
+    
+    Seq<User> findByEnabled(Boolean enabled, Pageable pageable);
 }
