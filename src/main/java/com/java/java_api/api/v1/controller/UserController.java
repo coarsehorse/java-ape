@@ -1,6 +1,7 @@
 package com.java.java_api.api.v1.controller;
 
 import com.java.java_api.entity.User;
+import com.java.java_api.exception.BadRequestException;
 import com.java.java_api.payload.request.CreateUserRequest;
 import com.java.java_api.payload.request.DeleteUserRequest;
 import com.java.java_api.payload.request.SetUserRoleRequest;
@@ -14,9 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,6 +28,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("api/v1/user")
+@Validated
 public class UserController {
     
     private final UserService userService;
@@ -60,8 +64,8 @@ public class UserController {
     @PreAuthorize("hasAuthority(T(com.java.java_api.security.AppAuthority).ADMIN_READ.name())")
     public List<UserResponse> getUsers(
         @RequestParam(required = false) Boolean enabled,
-        @RequestParam Long offset,
-        @RequestParam Integer size
+        @RequestParam @Min(0) Long offset,
+        @RequestParam @Min(1) Integer size
     ) {
         return userService
             .findByEnabled(
@@ -98,7 +102,7 @@ public class UserController {
     
     private void checkIsUserDisabled(User user) {
         if (!user.getEnabled()) {
-            throw new IllegalArgumentException(String.format("Specified user id=%d is disabled", user.getId()));
+            throw new BadRequestException(String.format("User id=%d is disabled", user.getId()));
         }
     }
     

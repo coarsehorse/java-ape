@@ -1,6 +1,7 @@
 package com.java.java_api.api.v1.controller;
 
 import com.java.java_api.entity.Post;
+import com.java.java_api.exception.BadRequestException;
 import com.java.java_api.payload.request.CreatePostRequest;
 import com.java.java_api.payload.request.DeletePostRequest;
 import com.java.java_api.payload.request.UpdatePostRequest;
@@ -13,9 +14,11 @@ import io.vavr.control.Option;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Min;
 import java.util.List;
 
 /**
@@ -23,6 +26,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("api/v1/post")
+@Validated
 public class PostController {
     
     private final PostService postService;
@@ -53,14 +57,18 @@ public class PostController {
     @PreAuthorize("hasAuthority(T(com.java.java_api.security.AppAuthority).USER_READ.name())")
     public List<PostResponse> getPosts(
         @RequestParam(required = false) Long userId,
-        @RequestParam Long offset,
-        @RequestParam Integer size,
+        @RequestParam @Min(0) Long offset,
+        @RequestParam @Min(1) Integer size,
         Authentication authentication
     ) {
         AppUser appUser = Utils.castAuthToAppUser(authentication);
         Long actualUserId = Option.of(userId).getOrElse(appUser.getUser().getId());
     
-        return postService.findNotDeletedByUserId(actualUserId, OffsetBasedPageRequest.of(offset, size))
+        return postService
+            .findNotDeletedByUserId(
+                actualUserId,
+                OffsetBasedPageRequest.of(offset, size)
+            )
             .map(PostResponse::from)
             .toJavaList();
     }
@@ -84,7 +92,7 @@ public class PostController {
     
     private void checkIsPostDeleted(Post post) {
         if (post.getDeleted()) {
-            throw new IllegalArgumentException(String.format("Specified post id=%d is deleted", post.getId()));
+            throw new BadRequestException(String.format("Post id=%d is deleted", post.getId()));
         }
     }
     

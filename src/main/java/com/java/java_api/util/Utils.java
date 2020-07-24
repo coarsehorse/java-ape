@@ -1,6 +1,7 @@
 package com.java.java_api.util;
 
 import com.java.java_api.entity.User;
+import com.java.java_api.exception.BadRequestException;
 import com.java.java_api.security.AppAuthority;
 import com.java.java_api.security.AppUser;
 import io.vavr.collection.HashSet;
@@ -40,7 +41,7 @@ public class Utils {
         Long appUserId = appUser.getUser().getId();
         
         if (!ownerId.equals(appUserId)) {
-            throw new IllegalArgumentException(
+            throw new BadRequestException(
                 String.format("Access denied because of user id=%d is not an owner", appUserId)
             );
         }
