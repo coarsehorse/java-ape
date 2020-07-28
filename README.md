@@ -1,4 +1,4 @@
-# Java API (Under construction)
+# Java Ape
 Java Restful API on top of the Spring stack.
 
 ### Used technologies:

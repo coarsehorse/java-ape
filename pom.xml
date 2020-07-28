@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.java</groupId>
-    <artifactId>java_api</artifactId>
+    <artifactId>java-ape</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>java_api</name>
-    <description>Java API on Spring stack</description>
+    <name>java-ape</name>
+    <description>Java API on top of the Spring stack</description>
 
     <properties>
         <java.version>11</java.version>
