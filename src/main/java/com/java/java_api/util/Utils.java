@@ -11,6 +11,9 @@ import io.vavr.control.Try;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 /**
  * Created by coarse_horse on 22/07/2020
  */
@@ -55,5 +58,15 @@ public class Utils {
         if (!hasAdminWritePerms) {
             Utils.checkOwnership(authentication, owner);
         }
+    }
+    
+    public static LocalDateTime date2LocalDateTime(Date dateToConv) {
+        return dateToConv.toInstant()
+            .atZone(Constants.DEFAULT_ZONE)
+            .toLocalDateTime();
+    }
+    
+    public static Date localDateTime2Date(LocalDateTime localDateTime) {
+        return Date.from(localDateTime.atZone(Constants.DEFAULT_ZONE).toInstant());
     }
 }

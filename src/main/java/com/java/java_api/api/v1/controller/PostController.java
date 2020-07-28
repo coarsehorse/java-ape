@@ -11,6 +11,7 @@ import com.java.java_api.service.PostService;
 import com.java.java_api.util.OffsetBasedPageRequest;
 import com.java.java_api.util.Utils;
 import io.vavr.control.Option;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -27,14 +28,10 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/post")
 @Validated
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class PostController {
     
     private final PostService postService;
-    
-    @Autowired
-    public PostController(PostService postService) {
-        this.postService = postService;
-    }
     
     @PostMapping("createPost")
     @PreAuthorize("hasAuthority(T(com.java.java_api.security.AppAuthority).USER_WRITE.name())")

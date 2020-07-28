@@ -11,6 +11,7 @@ import com.java.java_api.service.UserService;
 import com.java.java_api.util.OffsetBasedPageRequest;
 import com.java.java_api.util.Utils;
 import io.vavr.control.Option;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -29,16 +30,11 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("api/v1/user")
 @Validated
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class UserController {
     
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
-    
-    @Autowired
-    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
-        this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
-    }
     
     @PostMapping("createUser")
     @PreAuthorize("hasAuthority(T(com.java.java_api.security.AppAuthority).ADMIN_WRITE.name())")
