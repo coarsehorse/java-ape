@@ -1,6 +1,7 @@
 package com.java.java_api.payload.response;
 
 import com.java.java_api.entity.User;
+import com.java.java_api.security.AppRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ public class UserResponse {
     private String nickname;
     private String fullName;
     private LocalDateTime creationDate;
+    private AppRole role;
     private Set<String> authorities;
     private Boolean enabled;
     
@@ -29,6 +31,7 @@ public class UserResponse {
             user.getNickname(),
             user.getFullName(),
             user.getCreationDate(),
+            AppRole.from(user.getAuthorities()).getOrNull(),
             user.getAuthorities(),
             user.getEnabled()
         );

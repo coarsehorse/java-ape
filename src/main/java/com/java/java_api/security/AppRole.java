@@ -1,6 +1,7 @@
 package com.java.java_api.security;
 
 import io.vavr.collection.Stream;
+import io.vavr.control.Option;
 import lombok.Getter;
 
 import java.util.Set;
@@ -39,5 +40,12 @@ public enum AppRole {
             .map(Enum::name)
             .append(ROLE_PREFIX + this.name()) // add role as authority
             .collect(Collectors.toSet());
+    }
+    
+    public static Option<AppRole> from(Set<String> authorities) {
+        return Stream.ofAll(authorities)
+            .find(auth -> auth.startsWith(AppRole.ROLE_PREFIX))
+            .map(auth -> auth.replace(AppRole.ROLE_PREFIX, ""))
+            .map(AppRole::valueOf);
     }
 }
