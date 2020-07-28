@@ -23,3 +23,8 @@ The app implements JWT authentication and CRUD operations.
 
 Application can be configured locally using `application.properties` or 
 using env variables(`DB_URL`, `JWT_SECRET`, etc.) to run it on remote host.
+
+### Screenshots
+<p align="center"><img src="img/Screenshot_6.png"></p>
+<p align="center"><img src="img/Screenshot_7.png"></p>
+<p align="center"><img src="img/Screenshot_8.png"></p>
