@@ -1,0 +1,36 @@
+version: '3'
+services:
+  java-ape:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      - java-ape-net
+    ports:
+      - '8080:8080'
+    environment:
+      - DB_URL=jdbc:mysql://java-ape-db:3306/java-ape?characterEncoding=UTF-8
+    depends_on:
+      - java-ape-db
+    logging:
+      driver: json-file
+    restart: always
+  java-ape-db:
+    image: mysql:latest
+    networks:
+      - java-ape-net
+    ports:
+      - '3307:3306'
+    environment:
+      - MYSQL_ROOT_PASSWORD=xX_AS3-dS__S3Ff
+      - MYSQL_DATABASE=java-ape
+      - MYSQL_USER=notroot
+      - MYSQL_PASSWORD=theroot6
+    volumes:
+      - java-ape-db-vol:/var/lib/mysql
+    restart: always
+networks:
+  java-ape-net:
+    driver: bridge
+volumes:
+  java-ape-db-vol:
